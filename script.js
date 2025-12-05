@@ -1,12 +1,295 @@
 // =================================================================
-// ЧАСТЬ 1: БАЗА ДАННЫХ (13 УНИВЕРСИТЕТОВ)
+// ЧАСТЬ 0: СИСТЕМА ПЕРЕВОДОВ
+// =================================================================
+let currentLanguage = localStorage.getItem('language') || 'ru';
+
+const translations = {
+    ru: {
+        'header.title': '🏛️ Выбери свой университет!',
+        'nurym.title': '🤖 Nurym: Твой AI-консультант',
+        'nurym.description': 'Начните опрос, чтобы получить рекомендацию профессии и ВУЗа.',
+        'nurym.startQuiz': 'Начать опрос',
+        'catalog.title': '🎓 Каталог Университетов',
+        'filters.city': 'Город:',
+        'filters.allCities': '(Все города)',
+        'filters.subject1': 'Предмет 1 (ЕНТ):',
+        'filters.subject2': 'Предмет 2 (ЕНТ):',
+        'filters.notSelected': '(Не выбрано)',
+        'filters.apply': 'Применить фильтр',
+        'comparison.title': '📊 Сравнение ВУЗов',
+        'subjects.math': 'Математика',
+        'subjects.physics': 'Физика',
+        'subjects.biology': 'Биология',
+        'subjects.chemistry': 'Химия',
+        'subjects.history': 'История мира',
+        'subjects.geography': 'География',
+        'subjects.informatics': 'Информатика',
+        'subjects.foreignLang': 'Иностранный язык',
+        'buttons.details': 'Подробнее',
+        'buttons.compare': 'Сравнить',
+        'buttons.remove': 'Удалить',
+        'buttons.send': 'Отправить',
+        'chat.placeholder': 'Напишите ваш вопрос или проблему...',
+        'chat.title': '🤖 Nurym: Ваш персональный помощник',
+        'chat.subtitle': 'Помогу с выбором профессии, университета и документами',
+        'chat.welcome': 'Привет! Я твой персональный помощник и психолог. Я могу помочь тебе:',
+        'chat.welcome.help1': '🎓 Выбрать профессию и университет',
+        'chat.welcome.help2': '📄 Подготовить документы для поступления',
+        'chat.welcome.help3': '💪 Поддержать морально и мотивировать',
+        'chat.welcome.help4': '❓ Ответить на любые вопросы о поступлении',
+        'chat.welcome.example': 'Просто напиши мне, что тебя интересует! Например: "Помоги выбрать профессию", "Какие документы нужны?", "Я боюсь не поступить"',
+        'quiz.question1': 'Что вам нравится больше всего?',
+        'quiz.q1.option1': 'Анализировать данные, решать сложные задачи и строить модели.',
+        'quiz.q1.option2': 'Общаться, изучать языки, писать тексты или заниматься историей.',
+        'quiz.q1.option3': 'Помогать людям, изучать биологию, химию и работать с живыми системами.',
+        'quiz.question2': 'Какая ваша сильная сторона в школе?',
+        'quiz.q2.option1': 'Математика, Физика, Информатика.',
+        'quiz.q2.option2': 'Иностранные языки, История, Литература.',
+        'quiz.q2.option3': 'Биология, Химия, География.',
+        'quiz.q2.option4': 'Экономика, Право, Обществознание.',
+        'quiz.question3': 'Что вы предпочтете делать в свободное время?',
+        'quiz.q3.option1': 'Разбираться в работе гаджетов, компьютеров, программировать.',
+        'quiz.q3.option2': 'Изучать фондовые рынки, читать о стартапах и личных финансах.',
+        'quiz.q3.option3': 'Волонтерить, следить за здоровьем и новостями медицины.',
+        'quiz.results.title': '🎉 Ваши результаты от Nurym!',
+        'quiz.results.profile': 'На основании ваших ответов, ваш доминирующий профиль:',
+        'quiz.results.professions': '🧠 Рекомендуемые профессии:',
+        'quiz.results.subjects': '🎯 Рекомендуемые предметы ЕНТ:',
+        'quiz.results.universities': '🎓 Рекомендуемые ВУЗы:',
+        'quiz.results.restart': 'Пройти опрос заново',
+        'quiz.questionLabel': 'Вопрос',
+        'profiles.technical': 'ТЕХНИЧЕСКИЙ',
+        'profiles.humanitarian': 'ГУМАНИТАРНЫЙ',
+        'profiles.medical': 'МЕДИЦИНСКИЙ',
+        'profiles.business': 'БИЗНЕС',
+        'professions.technical': 'Инженер-программист, Разработчик ИИ, Инженер-нефтяник.',
+        'professions.humanitarian': 'Международный журналист, Лингвист, Педагог, Юрист.',
+        'professions.medical': 'Врач (Терапевт/Хирург), Стоматолог, Фармацевт.',
+        'professions.business': 'Финансист, Экономист, Менеджер проектов, Аудитор.',
+        'subjects.technical': 'Математика и Физика/Информатика',
+        'subjects.humanitarian': 'История мира/География и Иностранный язык',
+        'subjects.medical': 'Биология и Химия',
+        'subjects.business': 'Математика/География и География/Иностранный язык'
+    },
+    kk: {
+        'header.title': '🏛️ Өз университетіңді таңда!',
+        'nurym.title': '🤖 Nurym: Сіздің AI-кеңесшіңіз',
+        'nurym.description': 'Кәсіп пен ЖОО ұсынысын алу үшін сауалнаманы бастаңыз.',
+        'nurym.startQuiz': 'Сауалнаманы бастау',
+        'catalog.title': '🎓 Университеттер каталогы',
+        'filters.city': 'Қала:',
+        'filters.allCities': '(Барлық қалалар)',
+        'filters.subject1': 'Пән 1 (ЖБТ):',
+        'filters.subject2': 'Пән 2 (ЖБТ):',
+        'filters.notSelected': '(Таңдалмаған)',
+        'filters.apply': 'Сүзгіні қолдану',
+        'comparison.title': '📊 ЖОО салыстыру',
+        'subjects.math': 'Математика',
+        'subjects.physics': 'Физика',
+        'subjects.biology': 'Биология',
+        'subjects.chemistry': 'Химия',
+        'subjects.history': 'Әлем тарихы',
+        'subjects.geography': 'География',
+        'subjects.informatics': 'Информатика',
+        'subjects.foreignLang': 'Шет тілі',
+        'buttons.details': 'Толығырақ',
+        'buttons.compare': 'Салыстыру',
+        'buttons.remove': 'Жою',
+        'buttons.send': 'Жіберу',
+        'chat.placeholder': 'Сұрағыңызды немесе мәселеңізді жазыңыз...',
+        'chat.title': '🤖 Nurym: Сіздің жеке көмекшіңіз',
+        'chat.subtitle': 'Кәсіп, университет және құжаттарды таңдауға көмектесемін',
+        'chat.welcome': 'Сәлем! Мен сіздің жеке көмекшіңіз және психологыңыз. Мен сізге көмектесе аламын:',
+        'chat.welcome.help1': '🎓 Кәсіп пен университетті таңдау',
+        'chat.welcome.help2': '📄 Түсу үшін құжаттарды дайындау',
+        'chat.welcome.help3': '💪 Моральдық тұрғыдан қолдау және мотивациялау',
+        'chat.welcome.help4': '❓ Түсу туралы кез келген сұрақтарға жауап беру',
+        'chat.welcome.example': 'Маған не қызықтыратынын жазыңыз! Мысалы: "Кәсіп таңдауға көмектес", "Қандай құжаттар қажет?", "Мен түсе алмайтыннан қорқамын"',
+        'quiz.question1': 'Сізге ең көп не ұнайды?',
+        'quiz.q1.option1': 'Деректерді талдау, күрделі есептерді шешу және модельдер құру.',
+        'quiz.q1.option2': 'Адамдармен қарым-қатынас, тілдерді үйрену, мәтіндер жазу немесе тарихпен айналысу.',
+        'quiz.q1.option3': 'Адамдарға көмектесу, биология, химияны зерттеу және тірі жүйелермен жұмыс істеу.',
+        'quiz.question2': 'Мектепте сіздің күшті жағыңыз қандай?',
+        'quiz.q2.option1': 'Математика, Физика, Информатика.',
+        'quiz.q2.option2': 'Шет тілдері, Тарих, Әдебиет.',
+        'quiz.q2.option3': 'Биология, Химия, География.',
+        'quiz.q2.option4': 'Экономика, Құқық, Қоғамтану.',
+        'quiz.question3': 'Бос уақытыңызда не істеуді артық көресіз?',
+        'quiz.q3.option1': 'Гаджеттердің, компьютерлердің жұмысын түсіну, бағдарламалау.',
+        'quiz.q3.option2': 'Фондық нарықтарды зерттеу, стартаптар мен жеке қаржы туралы оқу.',
+        'quiz.q3.option3': 'Еріктілікпен айналысу, денсаулықты және медицина жаңалықтарын бақылау.',
+        'quiz.results.title': '🎉 Nurym-нан сіздің нәтижелеріңіз!',
+        'quiz.results.profile': 'Сіздің жауаптарыңызға сүйене отырып, сіздің басым профиліңіз:',
+        'quiz.results.professions': '🧠 Ұсынылатын кәсіптер:',
+        'quiz.results.subjects': '🎯 Ұсынылатын ЖБТ пәндері:',
+        'quiz.results.universities': '🎓 Ұсынылатын ЖОО:',
+        'quiz.results.restart': 'Сауалнаманы қайта өту',
+        'quiz.questionLabel': 'Сұрақ',
+        'profiles.technical': 'ТЕХНИКАЛЫҚ',
+        'profiles.humanitarian': 'ГУМАНИТАРЛЫҚ',
+        'profiles.medical': 'МЕДИЦИНАЛЫҚ',
+        'profiles.business': 'БИЗНЕС',
+        'professions.technical': 'Инженер-бағдарламашы, AI дамытушы, Мұнай инженері.',
+        'professions.humanitarian': 'Халықаралық журналист, Лингвист, Педагог, Құқықтанушы.',
+        'professions.medical': 'Дәрігер (Терапевт/Хирург), Стоматолог, Фармацевт.',
+        'professions.business': 'Қаржыгер, Экономист, Жоба менеджері, Аудитор.',
+        'subjects.technical': 'Математика және Физика/Информатика',
+        'subjects.humanitarian': 'Әлем тарихы/География және Шет тілі',
+        'subjects.medical': 'Биология және Химия',
+        'subjects.business': 'Математика/География және География/Шет тілі'
+    },
+    en: {
+        'header.title': '🏛️ Choose Your University!',
+        'nurym.title': '🤖 Nurym: Your AI Consultant',
+        'nurym.description': 'Start the survey to get profession and university recommendations.',
+        'nurym.startQuiz': 'Start Survey',
+        'catalog.title': '🎓 University Catalog',
+        'filters.city': 'City:',
+        'filters.allCities': '(All cities)',
+        'filters.subject1': 'Subject 1 (UNT):',
+        'filters.subject2': 'Subject 2 (UNT):',
+        'filters.notSelected': '(Not selected)',
+        'filters.apply': 'Apply Filter',
+        'comparison.title': '📊 University Comparison',
+        'subjects.math': 'Mathematics',
+        'subjects.physics': 'Physics',
+        'subjects.biology': 'Biology',
+        'subjects.chemistry': 'Chemistry',
+        'subjects.history': 'World History',
+        'subjects.geography': 'Geography',
+        'subjects.informatics': 'Informatics',
+        'subjects.foreignLang': 'Foreign Language',
+        'buttons.details': 'Details',
+        'buttons.compare': 'Compare',
+        'buttons.remove': 'Remove',
+        'buttons.send': 'Send',
+        'chat.placeholder': 'Write your question or problem...',
+        'chat.title': '🤖 Nurym: Your Personal Assistant',
+        'chat.subtitle': 'I can help with profession, university selection and documents',
+        'chat.welcome': 'Hello! I am your personal assistant and psychologist. I can help you:',
+        'chat.welcome.help1': '🎓 Choose profession and university',
+        'chat.welcome.help2': '📄 Prepare documents for admission',
+        'chat.welcome.help3': '💪 Support morally and motivate',
+        'chat.welcome.help4': '❓ Answer any questions about admission',
+        'chat.welcome.example': 'Just write to me what interests you! For example: "Help choose a profession", "What documents are needed?", "I am afraid I will not enter"',
+        'quiz.question1': 'What do you like most?',
+        'quiz.q1.option1': 'Analyze data, solve complex problems and build models.',
+        'quiz.q1.option2': 'Communicate, study languages, write texts or study history.',
+        'quiz.q1.option3': 'Help people, study biology, chemistry and work with living systems.',
+        'quiz.question2': 'What is your strong side at school?',
+        'quiz.q2.option1': 'Mathematics, Physics, Informatics.',
+        'quiz.q2.option2': 'Foreign languages, History, Literature.',
+        'quiz.q2.option3': 'Biology, Chemistry, Geography.',
+        'quiz.q2.option4': 'Economics, Law, Social Studies.',
+        'quiz.question3': 'What would you prefer to do in your free time?',
+        'quiz.q3.option1': 'Understand how gadgets and computers work, program.',
+        'quiz.q3.option2': 'Study stock markets, read about startups and personal finance.',
+        'quiz.q3.option3': 'Volunteer, follow health and medical news.',
+        'quiz.results.title': '🎉 Your Results from Nurym!',
+        'quiz.results.profile': 'Based on your answers, your dominant profile:',
+        'quiz.results.professions': '🧠 Recommended professions:',
+        'quiz.results.subjects': '🎯 Recommended UNT subjects:',
+        'quiz.results.universities': '🎓 Recommended Universities:',
+        'quiz.results.restart': 'Take the survey again',
+        'quiz.questionLabel': 'Question',
+        'profiles.technical': 'TECHNICAL',
+        'profiles.humanitarian': 'HUMANITARIAN',
+        'profiles.medical': 'MEDICAL',
+        'profiles.business': 'BUSINESS',
+        'professions.technical': 'Software Engineer, AI Developer, Petroleum Engineer.',
+        'professions.humanitarian': 'International Journalist, Linguist, Teacher, Lawyer.',
+        'professions.medical': 'Doctor (Therapist/Surgeon), Dentist, Pharmacist.',
+        'professions.business': 'Financier, Economist, Project Manager, Auditor.',
+        'subjects.technical': 'Mathematics and Physics/Informatics',
+        'subjects.humanitarian': 'World History/Geography and Foreign Language',
+        'subjects.medical': 'Biology and Chemistry',
+        'subjects.business': 'Mathematics/Geography and Geography/Foreign Language'
+    }
+};
+
+function changeLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('language', lang);
+    
+    // Обновляем активную кнопку
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`lang-${lang}`).classList.add('active');
+    
+    // Обновляем язык HTML
+    document.documentElement.lang = lang;
+    
+    // Переводим все элементы с data-translate
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+            if (element.tagName === 'INPUT' && element.type === 'text') {
+                element.placeholder = translations[lang][key];
+            } else if (element.tagName === 'OPTION') {
+                element.textContent = translations[lang][key];
+            } else {
+                element.textContent = translations[lang][key];
+            }
+        }
+    });
+    
+    // Обновляем заголовок страницы
+    if (lang === 'ru') {
+        document.title = 'Платформа Выбора ВУЗов | Nurym AI';
+    } else if (lang === 'kk') {
+        document.title = 'ЖОО Таңдау Платформасы | Nurym AI';
+    } else {
+        document.title = 'University Selection Platform | Nurym AI';
+    }
+    
+    // Обновляем приветственное сообщение в чате
+    const welcomeText = document.getElementById('chat-welcome-text');
+    const welcomeList = document.getElementById('chat-welcome-list');
+    const welcomeExample = document.getElementById('chat-welcome-example');
+    
+    if (welcomeText && translations[lang]['chat.welcome']) {
+        welcomeText.textContent = translations[lang]['chat.welcome'];
+    }
+    
+    if (welcomeList && translations[lang]) {
+        welcomeList.innerHTML = `
+            <li>${translations[lang]['chat.welcome.help1']}</li>
+            <li>${translations[lang]['chat.welcome.help2']}</li>
+            <li>${translations[lang]['chat.welcome.help3']}</li>
+            <li>${translations[lang]['chat.welcome.help4']}</li>
+        `;
+    }
+    
+    if (welcomeExample && translations[lang]['chat.welcome.example']) {
+        welcomeExample.textContent = translations[lang]['chat.welcome.example'];
+    }
+    
+    // Если опрос начат, перерисовываем текущий вопрос
+    const quizContainer = document.getElementById('quiz-container');
+    if (quizContainer && quizContainer.style.display !== 'none' && currentQuestionIndex < nurymQuiz.length) {
+        renderQuestion();
+    }
+    
+    // Если результаты показаны, перерисовываем их
+    const quizResults = document.getElementById('quiz-results');
+    if (quizResults && quizResults.style.display !== 'none') {
+        analyzeResults();
+    }
+}
+
+// Инициализация языка при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    changeLanguage(currentLanguage);
+});
+
+// =================================================================
+// ЧАСТЬ 1: БАЗА ДАННЫХ (12 УНИВЕРСИТЕТОВ)
 // =================================================================
 const universityData = [
     {
         "id": "kaznu",
         "name": "Казахский национальный университет им. аль-Фараби (КазНУ)",
         "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=KAZNU",
+        "image_url": "https://upload.wikimedia.org/wikipedia/de/thumb/b/b5/Al_Farabi_Universität_2024.svg/800px-Al_Farabi_Universität_2024.svg.png",
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
@@ -32,11 +315,11 @@ const universityData = [
             "international": {
                 "title": "🌍 Международное сотрудничество",
                 "exchange_programs": "Erasmus+, Mevlana, программы двойного диплома с вузами Европы.",
-                "partner_universities": ["Кембриджский университет", "МГУ", "Seoul National University"]
+                "partner_universities": ["Кембриджский университет", "МГУ"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/n4qN-d9N8U0?si=L4y_d4Ww"
+                "link": "https://elibrary.kaznu.kz/ru/virtualnyj-tur-biblioteki-al-farabi"
             }
         }
     },
@@ -44,12 +327,12 @@ const universityData = [
         "id": "nu",
         "name": "Назарбаев Университет (НУ)",
         "city": "Нур-Султан (Астана)",
-        "image_url": "https://via.placeholder.com/300x200?text=NU", 
+        "image_url": "https://www.timeshighereducation.com/cms-academic/sites/default/files/2025-04/NU-logo_web.jpg", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
                 "mission": "Стать национальным академическим центром мирового уровня, сочетая образование, исследования и инновации.",
-                "history_excerpt": "Основан в 2010 году. Модель управления основана на международных стандартах, партнерство с ведущими мировыми вузами.",
+                "history_excerpt": "Основан в 2010 году. Модель управления основана на международных стандартах.",
                 "achievements": ["Полностью автономный статус", "Исследовательский фокус", "Партнерство с University College London"]
             },
             "programs": {
@@ -74,167 +357,15 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/d3H_j_QYfC0?si=8Y_h-3O" 
+                "link": "https://nu.edu.kz/ru/campus/campustour" 
             }
         }
     },
     {
-        "id": "kbtu",
-        "name": "Казахстанско-Британский технический университет (КБТУ)",
+        "id": "satbayev_uni",
+        "name": "Satbayev University ",
         "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=KBTU",
-        "sections": {
-            "mission_history": {
-                "title": "📜 Миссия, История и Лидерство",
-                "mission": "Подготовка высококвалифицированных инженеров и бизнес-специалистов, ориентированных на международные стандарты.",
-                "history_excerpt": "Основан в 2001 году при поддержке правительств Казахстана и Великобритании. Изначально фокусировался на нефтегазовом секторе, затем расширился до IT и бизнеса.",
-                "achievements": ["Сильные программы в области IT и инженерии", "Аккредитация ABET", "Тесные связи с ведущими компаниями"]
-            },
-            "programs": {
-                "title": "📚 Академические программы",
-                "description": "Инженерия (Нефть и Газ, IT), Школа Бизнеса (Финансы, Менеджмент), Морская Академия.",
-                "list": [
-                    { "program_name": "Компьютерные науки (CS)", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Финансы", "subjects_required": ["Математика", "География"] },
-                    { "program_name": "Нефтегазовое дело", "subjects_required": ["Математика", "Физика"] }
-                ]
-            },
-            "admission": {
-                "title": "📝 Прием и Поступление",
-                "requirements": "Высокие баллы ЕНТ, внутренние экзамены (математика/английский), сертификаты IELTS/TOEFL.",
-                "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, внутренние гранты КБТУ."
-            },
-            "international": {
-                "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Программы обмена с вузами Великобритании и Европы (например, London School of Economics).",
-                "partner_universities": ["University of Aberdeen", "RSE", "LSE"]
-            },
-            "virtual_tour": {
-                "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/kbtu_tour_example"
-            }
-        }
-    },
-    {
-        "id": "aitu",
-        "name": "Astana IT University (AITU)",
-        "city": "Нур-Султан (Астана)",
-        "image_url": "https://via.placeholder.com/300x200?text=AITU",
-        "sections": {
-            "mission_history": {
-                "title": "📜 Миссия, История и Лидерство",
-                "mission": "Подготовка высококвалифицированных IT-специалистов, ориентированных на цифровизацию экономики Казахстана.",
-                "history_excerpt": "Основан в 2019 году в партнерстве с технопарком Astana Hub. Полностью сфокусирован на цифровых технологиях.",
-                "achievements": ["Самый молодой IT-университет", "Интеграция с IT-индустрией", "Практико-ориентированное обучение"]
-            },
-            "programs": {
-                "title": "📚 Академические программы",
-                "description": "Полный спектр IT-специальностей: Data Science, IoT, Кибербезопасность, Программная инженерия.",
-                "list": [
-                    { "program_name": "Big Data Analysis", "subjects_required": ["Математика", "Информатика"] },
-                    { "program_name": "Cybersecurity", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Software Engineering", "subjects_required": ["Математика", "Информатика"] }
-                ]
-            },
-            "admission": {
-                "title": "📝 Прием и Поступление",
-                "requirements": "ЕНТ, высокие баллы по Математике и Информатике/Физике.",
-                "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, внутренние гранты AITU."
-            },
-            "international": {
-                "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Обмен с IT-вузами Европы и Азии, гостевые лекции от международных экспертов.",
-                "partner_universities": ["Seoul Tech", "University of Helsinki"]
-            },
-            "virtual_tour": {
-                "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/aitu_tour_example"
-            }
-        }
-    },
-    {
-        "id": "iitu",
-        "name": "Международный Университет Информационных Технологий (МУИТ / IITU)",
-        "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=IITU",
-        "sections": {
-            "mission_history": {
-                "title": "📜 Миссия, История и Лидерство",
-                "mission": "Подготовка лидеров IT-индустрии, способных создавать и внедрять инновационные технологии.",
-                "history_excerpt": "Основан в 2009 году. Один из первых специализированных IT-вузов в Казахстане. Активно сотрудничает с глобальными IT-компаниями.",
-                "achievements": ["Лидер среди IT-вузов", "Программы, разработанные с учетом требований индустрии", "Сертификационные центры Microsoft, Cisco"]
-            },
-            "programs": {
-                "title": "📚 Академические программы",
-                "description": "Программная инженерия, Информационные системы, Телекоммуникации, Data Science.",
-                "list": [
-                    { "program_name": "Программная инженерия", "subjects_required": ["Математика", "Информатика"] },
-                    { "program_name": "Информационные системы", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Data Science", "subjects_required": ["Математика", "Информатика"] }
-                ]
-            },
-            "admission": {
-                "title": "📝 Прием и Поступление",
-                "requirements": "ЕНТ, высокие баллы по Математике и Информатике/Физике.",
-                "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, скидки от IT-партнеров."
-            },
-            "international": {
-                "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Обмен студентами и преподавателями с технологическими вузами Европы и Азии.",
-                "partner_universities": ["University of Applied Sciences in Latvia", "KTU"]
-            },
-            "virtual_tour": {
-                "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/iitu_tour_example"
-            }
-        }
-    },
-    {
-        "id": "karaganda_med",
-        "name": "Карагандинский медицинский университет (КМУ)",
-        "city": "Караганда",
-        "image_url": "https://via.placeholder.com/300x200?text=Karaganda+Med+Uni",
-        "sections": {
-            "mission_history": {
-                "title": "📜 Миссия, История и Лидерство",
-                "mission": "Улучшение здоровья общества через превосходство в науке, образовании и практике.",
-                "history_excerpt": "Основан в 1950 году. Является старейшим медицинским вузом Центрального Казахстана и имеет статус исследовательского университета.",
-                "achievements": ["Лидер среди медицинских ВУЗов РК", "Развитая клиническая база", "Высокий рейтинг в THE Impact Rankings"]
-            },
-            "programs": {
-                "title": "📚 Академические программы",
-                "description": "Общая медицина, Стоматология, Фармация, Педиатрия, Общественное здравоохранение.",
-                "list": [
-                    { "program_name": "Общая медицина", "subjects_required": ["Биология", "Химия"] },
-                    { "program_name": "Стоматология", "subjects_required": ["Биология", "Химия"] },
-                    { "program_name": "Общественное здравоохранение", "subjects_required": ["Биология", "География"] }
-                ]
-            },
-            "admission": {
-                "title": "📝 Прием и Поступление",
-                "requirements": "Высокие баллы ЕНТ (Биология и Химия), прохождение психологического тестирования.",
-                "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, внутренние стипендии."
-            },
-            "international": {
-                "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Обмен с клиниками и медицинскими вузами стран СНГ и Европы.",
-                "partner_universities": ["Ряд европейских и российских медицинских университетов"]
-            },
-            "virtual_tour": {
-                "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/karaganda_med_tour"
-            }
-        }
-    },
-    {
-        "id": "kaznitu",
-        "name": "Казахский национальный исследовательский технический университет им. К.И. Сатпаева (Satbayev University)",
-        "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=KAZNITU", 
+        "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f8/24/af/f824af1d-59a9-2b19-73bc-2cac83a2a0f1/AppIcon-1x_U007emarketing-0-5-0-0-85-220-0.png/1200x630wa.png", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
@@ -260,11 +391,11 @@ const universityData = [
             "international": {
                 "title": "🌍 Международное сотрудничество",
                 "exchange_programs": "Программы академической мобильности с техническими вузами Германии и России.",
-                "partner_universities": ["Colorado School of Mines", "РГУ нефти и газа им. И.М. Губкина"]
+                "partner_universities": ["Colorado School of Mines"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0?si=Q7m_j_A" 
+                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
             }
         }
     },
@@ -272,7 +403,7 @@ const universityData = [
         "id": "kaznmu",
         "name": "Казахский национальный медицинский университет им. С.Д. Асфендиярова (КазНМУ)",
         "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=KAZNMU", 
+        "image_url": "https://www.gov.kz/uploads/2024/1/23/7785e33e3efce3d018019527525096bb_original.347827.png", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
@@ -298,11 +429,49 @@ const universityData = [
             "international": {
                 "title": "🌍 Международное сотрудничество",
                 "exchange_programs": "Сотрудничество с клиниками и вузами Европы и Турции.",
-                "partner_universities": ["Karolinska Institutet", "Ankara University"]
+                "partner_universities": ["Karolinska Institutet"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/z4f_g_Jk9U0?si=S1h_r-0O" 
+                "link": "https://world.kaznmu.edu.kz/index_ru.html#pano1962/-36.1/-0.0/90.0"
+            }
+        }
+    },
+    {
+        "id": "kargmu",
+        "name": "Карагандинский медицинский университет (КМУ)",
+        "city": "Караганда",
+        "image_url": "https://img.hhcdn.ru/employer-logo/3404678.jpeg",
+        "sections": {
+            "mission_history": {
+                "title": "📜 Миссия, История и Лидерство",
+                "mission": "Улучшение здоровья общества через превосходство в науке, образовании и практике.",
+                "history_excerpt": "Основан в 1950 году. Является старейшим медицинским вузом Центрального Казахстана.",
+                "achievements": ["Лидер среди медицинских ВУЗов РК", "Развитая клиническая база", "Высокий рейтинг в THE Impact Rankings"]
+            },
+            "programs": {
+                "title": "📚 Академические программы",
+                "description": "Общая медицина, Стоматология, Фармация, Педиатрия, Общественное здравоохранение.",
+                "list": [
+                    { "program_name": "Общая медицина", "subjects_required": ["Биология", "Химия"] },
+                    { "program_name": "Стоматология", "subjects_required": ["Биология", "Химия"] },
+                    { "program_name": "Общественное здравоохранение", "subjects_required": ["Биология", "География"] }
+                ]
+            },
+            "admission": {
+                "title": "📝 Прием и Поступление",
+                "requirements": "Высокие баллы ЕНТ (Биология и Химия), прохождение психологического тестирования.",
+                "deadlines": "Прием заявлений: Июль – Август.",
+                "scholarships": "Гранты МОН РК, внутренние стипендии."
+            },
+            "international": {
+                "title": "🌍 Международное сотрудничество",
+                "exchange_programs": "Обмен с клиниками и медицинскими вузами стран СНГ и Европы.",
+                "partner_universities": ["Ряд европейских и российских медицинских университетов"]
+            },
+            "virtual_tour": {
+                "title": "🗺️ 3D-тур",
+                "link": "https://kuula.co/share/hd3Q8/collection/71B5B?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1&inst=ru"
             }
         }
     },
@@ -310,7 +479,7 @@ const universityData = [
         "id": "enu",
         "name": "Евразийский национальный университет им. Л.Н. Гумилева (ЕНУ)",
         "city": "Нур-Султан (Астана)",
-        "image_url": "https://via.placeholder.com/300x200?text=ENU", 
+        "image_url": "https://avatars.mds.yandex.net/i?id=a9890d0ae1ca2d1480edf43aa5bea8beb36fa8af-5288552-images-thumbs&n=13", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
@@ -340,7 +509,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/enu_tour_example" 
+                "link": "https://www.youtube.com/embed/d3H_j_QYfC0"
             }
         }
     },
@@ -348,7 +517,7 @@ const universityData = [
         "id": "kaznpu",
         "name": "Казахский национальный педагогический университет им. Абая (КазНПУ)",
         "city": "Алматы",
-        "image_url": "https://via.placeholder.com/300x200?text=KAZNPU", 
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/ҚазҰПУ_.jpg/1200px-ҚазҰПУ_.jpg", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
@@ -362,99 +531,175 @@ const universityData = [
                 "list": [
                     { "program_name": "Учитель истории", "subjects_required": ["История мира", "География"] },
                     { "program_name": "Педагогика и психология", "subjects_required": ["Биология", "География"] },
-                    { "program_name": "Иностранный язык", "subjects_required": ["Иностранный язык", "История мира"] }
+                    { "program_name": "Учитель информатики", "subjects_required": ["Математика", "Информатика"] }
                 ]
             },
             "admission": {
                 "title": "📝 Прием и Поступление",
-                "requirements": "ЕНТ, творческие экзамены для художественных и музыкальных специальностей.",
+                "requirements": "ЕНТ, творческие экзамены для некоторых специальностей. Минимальный балл ЕНТ для педагогических специальностей.",
                 "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, высокая доля бюджетных мест."
+                "scholarships": "Гранты МОН РК, целевые гранты для сельской молодежи."
             },
             "international": {
                 "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Сотрудничество с педагогическими вузами СНГ и Европы.",
-                "partner_universities": ["Московский педагогический государственный университет"]
+                "exchange_programs": "Программы обмена с педагогическими вузами России, Китая, Турции.",
+                "partner_universities": ["Московский педагогический государственный университет (МПГУ)"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/example" 
+                "link": "hhttps://kaznpu.kz/VirtualTour/index_en.html" 
             }
         }
     },
     {
-        "id": "kariu",
-        "name": "Карагандинский университет им. Е.А. Букетова (КарУ)",
+        "id": "karu",
+        "name": "Карагандинский национальный исследовательский университет им. Е. А. Букетова (КарНИУ)",
         "city": "Караганда",
-        "image_url": "https://via.placeholder.com/300x200?text=KARU", 
+        "image_url": "https://play-lh.googleusercontent.com/Vqswj4BVX-uDJ1_he4y-fAjVuXjT_L_gE2Ko2uL21oCM6QXd1Sk8n4cnNdS8MHLqQiE", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
-                "mission": "Подготовка конкурентоспособных специалистов для центрального региона Казахстана.",
-                "history_excerpt": "Основан в 1972 году. Крупнейший классический вуз Центрального Казахстана.",
-                "achievements": ["Сильные юридические и гуманитарные школы", "Исследовательский статус"]
+                "mission": "Классический университет, центр образования и науки Центрального Казахстана.",
+                "history_excerpt": "Основан в 1972 году. Крупнейший классический вуз Караганды.",
+                "achievements": ["Сильные естественнонаучные и гуманитарные программы", "Развитая научная база"]
             },
             "programs": {
                 "title": "📚 Академические программы",
-                "description": "Классический набор специальностей: право, экономика, естественные и гуманитарные науки.",
+                "description": "Юриспруденция, Физика, Химия, Экономика, Иностранные языки.",
                 "list": [
                     { "program_name": "Юриспруденция", "subjects_required": ["История мира", "География"] },
-                    { "program_name": "Информатика", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Медицина", "subjects_required": ["Биология", "Химия"] }
+                    { "program_name": "Физика и Техника", "subjects_required": ["Математика", "Физика"] },
+                    { "program_name": "Иностранная филология", "subjects_required": ["История мира", "Иностранный язык"] }
                 ]
             },
             "admission": {
                 "title": "📝 Прием и Поступление",
-                "requirements": "ЕНТ по профильным предметам.",
+                "requirements": "ЕНТ, творческие экзамены для некоторых специальностей.",
                 "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, региональные гранты."
+                "scholarships": "Гранты МОН РК, внутренние стипендии."
             },
             "international": {
                 "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Активное сотрудничество с вузами СНГ и Европы.",
-                "partner_universities": ["Томский государственный университет"]
+                "exchange_programs": "Обмен с вузами стран СНГ и Европы.",
+                "partner_universities": ["МГУ, РУДН"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/example" 
+                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
             }
         }
     },
     {
         "id": "kartu",
-        "name": "Карагандинский технический университет (КарТУ)",
+        "name": "Карагандинский технический университет имени А. Сагинова (КарТУ)",
         "city": "Караганда",
-        "image_url": "https://via.placeholder.com/300x200?text=KARTU", 
+        "image_url": "https://avatars.mds.yandex.net/i?id=f5b77e7c87c6c772feadddce180a0148_sr-16973438-images-thumbs&n=13", 
         "sections": {
             "mission_history": {
                 "title": "📜 Миссия, История и Лидерство",
-                "mission": "Ориентирован на подготовку инженеров и кадров для горнодобывающей и металлургической промышленности.",
-                "history_excerpt": "Основан в 1953 году. Один из ключевых технических вузов Казахстана.",
-                "achievements": ["Специализация на инженерии и технике", "Сотрудничество с промышленными гигантами"]
+                "mission": "Подготовка инженерных кадров для горно-металлургического комплекса и промышленности Центрального Казахстана.",
+                "history_excerpt": "Основан в 1953 году. Крупный технический вуз региона.",
+                "achievements": ["Связи с промышленными предприятиями Карагандинской области", "Сильные инженерные программы"]
             },
             "programs": {
                 "title": "📚 Академические программы",
-                "description": "Горное дело, Строительство, Машиностроение, Транспорт, IT-технологии.",
+                "description": "Горное дело, Металлургия, Машиностроение, IT-технологии.",
                 "list": [
                     { "program_name": "Горное дело", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Строительство", "subjects_required": ["Математика", "Физика"] },
-                    { "program_name": "Компьютерные науки", "subjects_required": ["Математика", "Информатика"] }
+                    { "program_name": "Металлургия", "subjects_required": ["Математика", "Физика"] },
+                    { "program_name": "IT-системы", "subjects_required": ["Математика", "Информатика"] }
                 ]
             },
             "admission": {
                 "title": "📝 Прием и Поступление",
                 "requirements": "ЕНТ, профильные предметы – Математика и Физика.",
                 "deadlines": "Прием заявлений: Июль – Август.",
-                "scholarships": "Гранты МОН РК, гранты от местных предприятий."
+                "scholarships": "Гранты МОН РК, целевые гранты от промышленных компаний."
             },
             "international": {
                 "title": "🌍 Международное сотрудничество",
-                "exchange_programs": "Обмен с техническими университетами России и Европы.",
-                "partner_universities": ["МГТУ им. Н.Э. Баумана"]
+                "exchange_programs": "Программы обмена с техническими вузами России и Европы.",
+                "partner_universities": ["МГТУ им. Баумана"]
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/example" 
+                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
+            }
+        }
+    },
+    {
+        "id": "aitu",
+        "name": "Astana IT University (AITU)",
+        "city": "Нур-Султан (Астана)",
+        "image_url": "https://frankfurt2.apollo.olxcdn.com/v1/files/nwrvh9aq1sl52-KZ/image;s=683x359;q=50",
+        "sections": {
+            "mission_history": {
+                "title": "📜 Миссия, История и Лидерство",
+                "mission": "Подготовка высококвалифицированных IT-специалистов, ориентированных на цифровизацию экономики Казахстана.",
+                "history_excerpt": "Основан в 2019 году в партнерстве с технопарком Astana Hub. Полностью сфокусирован на цифровых технологиях.",
+                "achievements": ["Самый молодой IT-университет", "Интеграция с IT-индустрией", "Практико-ориентированное обучение"]
+            },
+            "programs": {
+                "title": "📚 Академические программы",
+                "description": "Полный спектр IT-специальностей: Data Science, IoT, Кибербезопасность, Программная инженерия.",
+                "list": [
+                    { "program_name": "Big Data Analysis", "subjects_required": ["Математика", "Информатика"] },
+                    { "program_name": "Cybersecurity", "subjects_required": ["Математика", "Физика"] },
+                    { "program_name": "Software Engineering", "subjects_required": ["Математика", "Информатика"] }
+                ]
+            },
+            "admission": {
+                "title": "📝 Прием и Поступление",
+                "requirements": "ЕНТ, высокие баллы по Математике и Информатике/Физике.",
+                "deadlines": "Прием заявлений: Июль – Август.",
+                "scholarships": "Гранты МОН РК, внутренние гранты AITU."
+            },
+            "international": {
+                "title": "🌍 Международное сотрудничество",
+                "exchange_programs": "Обмен с IT-вузами Европы и Азии, гостевые лекции от международных экспертов.",
+                "partner_universities": ["Seoul Tech", "University of Helsinki"]
+            },
+            "virtual_tour": {
+                "title": "🗺️ 3D-тур",
+                "link": "https://www.youtube.com/embed/d3H_j_QYfC0"
+            }
+        }
+    },
+    {
+        "id": "iitu",
+        "name": "Международный Университет Информационных Технологий (МУИТ / IITU)",
+        "city": "Алматы",
+        "image_url": "https://avatars.mds.yandex.net/i?id=a752cd9a5a7129c8c8e8699ee65aaa5d_l-16469413-images-thumbs&n=13",
+        "sections": {
+            "mission_history": {
+                "title": "📜 Миссия, История и Лидерство",
+                "mission": "Подготовка лидеров IT-индустрии, способных создавать и внедрять инновационные технологии.",
+                "history_excerpt": "Основан в 2009 году. Один из первых специализированных IT-вузов в Казахстане. Активно сотрудничает с глобальными IT-компаниями.",
+                "achievements": ["Лидер среди IT-вузов", "Программы, разработанные с учетом требований индустрии", "Сертификационные центры Microsoft, Cisco"]
+            },
+            "programs": {
+                "title": "📚 Академические программы",
+                "description": "Программная инженерия, Информационные системы, Телекоммуникации, Data Science.",
+                "list": [
+                    { "program_name": "Программная инженерия", "subjects_required": ["Математика", "Информатика"] },
+                    { "program_name": "Информационные системы", "subjects_required": ["Математика", "Физика"] },
+                    { "program_name": "Data Science", "subjects_required": ["Математика", "Информатика"] }
+                ]
+            },
+            "admission": {
+                "title": "📝 Прием и Поступление",
+                "requirements": "ЕНТ, высокие баллы по Математике и Информатике/Физике.",
+                "deadlines": "Прием заявлений: Июль – Август.",
+                "scholarships": "Гранты МОН РК, скидки от IT-партнеров."
+            },
+            "international": {
+                "title": "🌍 Международное сотрудничество",
+                "exchange_programs": "Обмен студентами и преподавателями с технологическими вузами Европы и Азии.",
+                "partner_universities": ["University of Applied Sciences in Latvia", "KTU"]
+            },
+            "virtual_tour": {
+                "title": "🗺️ 3D-тур",
+                "link": "https://www.youtube.com/embed/z4f_g_Jk9U0"
             }
         }
     }
@@ -474,8 +719,19 @@ function renderUniversityList(unis) {
     const listContainer = document.getElementById('university-list');
     listContainer.innerHTML = ''; // Очищаем список перед выводом
 
+    const noResultsText = {
+        ru: 'Вузов, соответствующих вашим критериям, не найдено.',
+        kk: 'Сіздің критерийлеріңізге сәйкес келетін ЖОО табылмады.',
+        en: 'No universities matching your criteria were found.'
+    };
+    const cityLabel = {
+        ru: 'Город:',
+        kk: 'Қала:',
+        en: 'City:'
+    };
+
     if (unis.length === 0) {
-        listContainer.innerHTML = '<p style="grid-column: 1 / -1;">Вузов, соответствующих вашим критериям, не найдено.</p>';
+        listContainer.innerHTML = `<p style="grid-column: 1 / -1;">${noResultsText[currentLanguage]}</p>`;
         return;
     }
 
@@ -487,10 +743,10 @@ function renderUniversityList(unis) {
             <img src="${uni.image_url}" alt="Фото кампуса ${uni.name}">
             <div class="uni-card-content">
                 <h3>${uni.name}</h3>
-                <p><strong>Город:</strong> ${uni.city}</p>
+                <p><strong>${cityLabel[currentLanguage]}</strong> ${uni.city}</p>
                 <p>${uni.sections.mission_history.history_excerpt.substring(0, 100)}...</p>
-                <button onclick="showDetails('${uni.id}')">Подробнее</button>
-                <button onclick="addToComparison('${uni.id}')">Сравнить</button>
+                <button onclick="showDetails('${uni.id}')">${translations[currentLanguage]['buttons.details']}</button>
+                <button onclick="addToComparison('${uni.id}')">${translations[currentLanguage]['buttons.compare']}</button>
             </div>
         `;
         listContainer.appendChild(card);
@@ -703,16 +959,16 @@ const nurymQuiz = [
         id: 1,
         question: "Что вам нравится больше всего?",
         options: [
-            { text: "Анализировать данные, решать сложные задачи и строить модели (IT/Инженерия).", score: { technical: 3, business: 1 } },
-            { text: "Общаться, изучать языки, писать тексты или заниматься историей (Гуманитарные).", score: { humanitarian: 3 } },
-            { text: "Помогать людям, изучать биологию, химию и работать с живыми системами (Медицина).", score: { medical: 3 } },
+            { text: "Анализировать данные, решать сложные задачи и строить модели.", score: { technical: 3, business: 1 } },
+            { text: "Общаться, изучать языки, писать тексты или заниматься историей.", score: { humanitarian: 3 } },
+            { text: "Помогать людям, изучать биологию, химию и работать с живыми системами.", score: { medical: 3 } },
         ]
     },
     {
         id: 2,
         question: "Какая ваша сильная сторона в школе?",
         options: [
-            { text: "Математика, Физика, Информатика.", score: { technical: 2, it: 2 } },
+            { text: "Математика, Физика, Информатика.", score: { technical: 2 } },
             { text: "Иностранные языки, История, Литература.", score: { humanitarian: 2 } },
             { text: "Биология, Химия, География.", score: { medical: 2, technical: 1 } },
             { text: "Экономика, Право, Обществознание.", score: { business: 2, humanitarian: 1 } },
@@ -722,7 +978,7 @@ const nurymQuiz = [
         id: 3,
         question: "Что вы предпочтете делать в свободное время?",
         options: [
-            { text: "Разбираться в работе гаджетов, компьютеров, программировать.", score: { technical: 2, it: 3 } },
+            { text: "Разбираться в работе гаджетов, компьютеров, программировать.", score: { technical: 2 } },
             { text: "Изучать фондовые рынки, читать о стартапах и личных финансах.", score: { business: 2 } },
             { text: "Волонтерить, следить за здоровьем и новостями медицины.", score: { medical: 2 } }
         ]
@@ -730,27 +986,48 @@ const nurymQuiz = [
 ];
 
 let currentQuestionIndex = 0;
-// Добавляем IT-профиль для более точных рекомендаций
-let profileScores = { technical: 0, humanitarian: 0, medical: 0, business: 0, it: 0 };
+let profileScores = { technical: 0, humanitarian: 0, medical: 0, business: 0 };
 
 function startQuiz() {
     currentQuestionIndex = 0;
-    profileScores = { technical: 0, humanitarian: 0, medical: 0, business: 0, it: 0 };
+    profileScores = { technical: 0, humanitarian: 0, medical: 0, business: 0 }; 
     document.getElementById('quiz-results').style.display = 'none';
     document.getElementById('quiz-container').style.display = 'block';
     renderQuestion();
 }
 
+function getTranslatedQuiz() {
+    const quizKeys = [
+        { question: 'quiz.question1', options: ['quiz.q1.option1', 'quiz.q1.option2', 'quiz.q1.option3'] },
+        { question: 'quiz.question2', options: ['quiz.q2.option1', 'quiz.q2.option2', 'quiz.q2.option3', 'quiz.q2.option4'] },
+        { question: 'quiz.question3', options: ['quiz.q3.option1', 'quiz.q3.option2', 'quiz.q3.option3'] }
+    ];
+    
+    return quizKeys.map((q, index) => {
+        const originalQ = nurymQuiz[index];
+        return {
+            id: originalQ.id,
+            question: translations[currentLanguage][q.question] || originalQ.question,
+            options: q.options.map((optKey, optIndex) => ({
+                text: translations[currentLanguage][optKey] || originalQ.options[optIndex].text,
+                score: originalQ.options[optIndex].score
+            }))
+        };
+    });
+}
+
 function renderQuestion() {
     const container = document.getElementById('quiz-container');
-    const q = nurymQuiz[currentQuestionIndex];
+    const translatedQuiz = getTranslatedQuiz();
+    const q = translatedQuiz[currentQuestionIndex];
     
     if (!q) {
         analyzeResults(); 
         return;
     }
 
-    let htmlContent = `<h4>Вопрос ${currentQuestionIndex + 1}/${nurymQuiz.length}: ${q.question}</h4>`;
+    const questionLabel = translations[currentLanguage]['quiz.questionLabel'] || 'Вопрос';
+    let htmlContent = `<h4>${questionLabel} ${currentQuestionIndex + 1}/${translatedQuiz.length}: ${q.question}</h4>`;
     
     q.options.forEach((option) => {
         // Экранируем JSON для передачи в функцию
@@ -769,7 +1046,8 @@ function processAnswer(scores) {
     }
 
     currentQuestionIndex++;
-    if (currentQuestionIndex < nurymQuiz.length) {
+    const translatedQuiz = getTranslatedQuiz();
+    if (currentQuestionIndex < translatedQuiz.length) {
         renderQuestion();
     } else {
         analyzeResults();
@@ -797,154 +1075,586 @@ function analyzeResults() {
     let uniRec = [];
 
     switch (mainProfile) {
-        case 'it':
-            professionRec = 'Разработчик ПО, Data Scientist, Специалист по кибербезопасности.';
-            subjectRec = 'Математика и Информатика/Физика';
-            uniRec = universityData.filter(u => ['aitu', 'iitu', 'kbtu', 'kaznu'].includes(u.id));
-            break;
         case 'technical':
-            professionRec = 'Инженер-нефтяник, Строитель, Энергетик.';
-            subjectRec = 'Математика и Физика';
-            uniRec = universityData.filter(u => ['kaznitu', 'kbtu', 'kartu', 'kaznu'].includes(u.id));
+            professionRec = translations[currentLanguage]['professions.technical'] || 'Инженер-программист, Разработчик ИИ, Инженер-нефтяник.';
+            subjectRec = translations[currentLanguage]['subjects.technical'] || 'Математика и Физика/Информатика';
+            uniRec = universityData.filter(u => ['kaznu', 'satbayev_uni', 'nu', 'kartu', 'aitu', 'iitu'].includes(u.id));
             break;
         case 'humanitarian':
-            professionRec = 'Международный журналист, Лингвист, Педагог, Юрист.';
-            subjectRec = 'История мира/География и Иностранный язык';
-            uniRec = universityData.filter(u => ['kaznu', 'enu', 'kaznpu', 'kariu'].includes(u.id));
+            professionRec = translations[currentLanguage]['professions.humanitarian'] || 'Международный журналист, Лингвист, Педагог, Юрист.';
+            subjectRec = translations[currentLanguage]['subjects.humanitarian'] || 'История мира/География и Иностранный язык';
+            uniRec = universityData.filter(u => ['kaznu', 'enu', 'kaznpu', 'karu'].includes(u.id));
             break;
         case 'medical':
-            professionRec = 'Врач (Терапевт/Хирург), Стоматолог, Фармацевт.';
-            subjectRec = 'Биология и Химия';
-            uniRec = universityData.filter(u => ['kaznmu', 'kaznu', 'kariu', 'karaganda_med'].includes(u.id));
+            professionRec = translations[currentLanguage]['professions.medical'] || 'Врач (Терапевт/Хирург), Стоматолог, Фармацевт.';
+            subjectRec = translations[currentLanguage]['subjects.medical'] || 'Биология и Химия';
+            uniRec = universityData.filter(u => ['kaznmu', 'kaznu', 'karu', 'kargmu'].includes(u.id));
             break;
         case 'business':
-            professionRec = 'Финансист, Экономист, Менеджер проектов, Аудитор.';
-            subjectRec = 'Математика/География и География/Иностранный язык';
-            uniRec = universityData.filter(u => ['kbtu', 'nu'].includes(u.id));
+            professionRec = translations[currentLanguage]['professions.business'] || 'Финансист, Экономист, Менеджер проектов, Аудитор.';
+            subjectRec = translations[currentLanguage]['subjects.business'] || 'Математика/География и География/Иностранный язык';
+            uniRec = universityData.filter(u => ['kaznu', 'enu', 'nu'].includes(u.id));
             break;
         default:
-            professionRec = 'Не удалось определить профиль.';
-            subjectRec = 'Любой';
+            professionRec = translations[currentLanguage]['professions.technical'] || 'Не удалось определить профиль.';
+            subjectRec = translations[currentLanguage]['subjects.technical'] || 'Любой';
             uniRec = [];
     }
     
+    const profileName = translations[currentLanguage][`profiles.${mainProfile}`] || mainProfile.toUpperCase();
     let uniHtml = uniRec.map(u => `<li>${u.name} (${u.city})</li>`).join('');
 
     resultsContainer.innerHTML = `
         <div class="nurym-output">
-            <h3>🎉 Ваши результаты от Nurym!</h3>
-            <p>На основании ваших ответов, ваш доминирующий профиль: <strong>${mainProfile.toUpperCase()}</strong>.</p>
-            <p><strong>🧠 Рекомендуемые профессии:</strong> ${professionRec}</p>
-            <p><strong>🎯 Рекомендуемые предметы ЕНТ:</strong> ${subjectRec}</p>
+            <h3>${translations[currentLanguage]['quiz.results.title'] || '🎉 Ваши результаты от Nurym!'}</h3>
+            <p>${translations[currentLanguage]['quiz.results.profile'] || 'На основании ваших ответов, ваш доминирующий профиль:'} <strong>${profileName}</strong>.</p>
+            <p><strong>${translations[currentLanguage]['quiz.results.professions'] || '🧠 Рекомендуемые профессии:'}</strong> ${professionRec}</p>
+            <p><strong>${translations[currentLanguage]['quiz.results.subjects'] || '🎯 Рекомендуемые предметы ЕНТ:'}</strong> ${subjectRec}</p>
             
-            <h4>🎓 Рекомендуемые ВУЗы:</h4>
+            <h4>${translations[currentLanguage]['quiz.results.universities'] || '🎓 Рекомендуемые ВУЗы:'}</h4>
             <ul>${uniHtml}</ul>
             
-            <button onclick="startQuiz()">Пройти опрос заново</button>
+            <button onclick="startQuiz()">${translations[currentLanguage]['quiz.results.restart'] || 'Пройти опрос заново'}</button>
         </div>
     `;
 }
 
 // =================================================================
-// ЧАСТЬ 5: ЧАТ-ПОМОЩНИК NURUM (ИНТЕРАКТИВНЫЙ)
+// ЧАСТЬ 5: AI-АССИСТЕНТ-ПСИХОЛОГ
 // =================================================================
 
-function toggleChat() {
-    const modal = document.getElementById('nurym-chat-modal');
-    modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
-    if (modal.style.display === 'flex') {
-        document.getElementById('user-input').focus();
+function toggleAIChat() {
+    const modal = document.getElementById('ai-chat-modal');
+    if (modal.style.display === 'none' || modal.style.display === '') {
+        modal.style.display = 'flex';
+        document.getElementById('ai-user-input').focus();
+    } else {
+        modal.style.display = 'none';
     }
 }
 
-function displayMessage(sender, text) {
-    const chatBody = document.getElementById('chat-messages');
+function displayAIMessage(sender, text, isUser = false) {
+    const chatBody = document.getElementById('ai-chat-messages');
     const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${sender}`;
-    messageDiv.innerHTML = text;
+    messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = isUser ? '👤' : '🤖';
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    if (!isUser) {
+        content.innerHTML = `<strong>Nurym:</strong> ${text}`;
+    } else {
+        content.textContent = text;
+    }
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
     chatBody.appendChild(messageDiv);
     
     // Прокрутка вниз
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-function sendMessage() {
-    const inputField = document.getElementById('user-input');
+function sendAIMessage() {
+    const inputField = document.getElementById('ai-user-input');
     const userText = inputField.value.trim();
 
     if (userText === '') return;
 
-    // 1. Отображаем сообщение пользователя
-    displayMessage('user', userText);
+    // Отображаем сообщение пользователя
+    displayAIMessage('user', userText, true);
 
-    // 2. Получаем ответ от Nurym
-    const nurymResponse = generateNurymResponse(userText);
-    
-    // 3. Отображаем ответ Nurym
+    // Получаем ответ от AI
     setTimeout(() => {
-        displayMessage('nurym', nurymResponse);
+        const aiResponse = generateAIResponse(userText);
+        displayAIMessage('ai', aiResponse);
     }, 500); // Имитация задержки ответа
 
-    // 4. Очищаем поле ввода
+    // Очищаем поле ввода
     inputField.value = '';
 }
 
-function generateNurymResponse(userInput) {
+function generateAIResponse(userInput) {
     const lowInput = userInput.toLowerCase();
     
-    // --- Команды для сравнения ВУЗов ---
-    const compareMatch = lowInput.match(/сравнить\s+(.+)\s+и\s+(.+)/);
-    if (compareMatch) {
-        const uniName1 = compareMatch[1].trim();
-        const uniName2 = compareMatch[2].trim();
+    // === ПСИХОЛОГИЧЕСКАЯ ПОДДЕРЖКА ===
+    if (lowInput.includes('боюсь') || lowInput.includes('страх') || lowInput.includes('тревож') || lowInput.includes('нервничаю') || lowInput.includes('волнуюсь')) {
+        return `Понимаю твои переживания! Это абсолютно нормально чувствовать тревогу перед таким важным шагом. 🌟
         
-        const uni1 = universityData.find(u => u.name.toLowerCase().includes(uniName1) || u.id === uniName1.toLowerCase());
-        const uni2 = universityData.find(u => u.name.toLowerCase().includes(uniName2) || u.id === uniName2.toLowerCase());
+Вот несколько советов:
+• <strong>Ты не один/одна</strong> - тысячи абитуриентов проходят через те же эмоции
+• <strong>Подготовка - ключ к успеху</strong> - составь план подготовки и следуй ему
+• <strong>Дыши глубоко</strong> - когда чувствуешь тревогу, сделай 5 глубоких вдохов
+• <strong>Верь в себя</strong> - ты уже проделал/а большой путь!
 
-        if (uni1 && uni2) {
-            // Активируем функцию сравнения
-            comparisonList = [uni1.id, uni2.id];
-            document.getElementById('comparison-section').style.display = 'block';
-            showComparison();
-            // Закрываем чат и показываем результат
-            toggleChat(); 
-            return `Нашел ${uni1.name} и ${uni2.name}. Запускаю сравнение на сайте. Посмотрите секцию "Сравнение ВУЗов" выше!`;
-        } else {
-            return `Не удалось найти один или оба университета. Попробуйте ввести точнее (например, "КазНУ" или "ЕНУ").`;
-        }
-    }
-
-    // --- Команда для запуска Опросника ---
-    if (lowInput.includes('опрос') || lowInput.includes('тест') || lowInput.includes('профориентация')) {
-        startQuiz();
-        toggleChat();
-        return 'Запускаю опросник Nurym! Он появился в секции "Nurym: Твой AI-консультант".';
-    }
-
-    // --- Команда для показа ВУЗов ---
-    if (lowInput.includes('вузы') || lowInput.includes('список') || lowInput.includes('каталог')) {
-        renderUniversityList(universityData);
-        return 'Отобразил полный список всех 13 университетов в секции "Каталог Университетов".';
-    }
-
-    // --- Команда для навигации/поступления ---
-    if (lowInput.includes('поступление') || lowInput.includes('требования') || lowInput.includes('сроки')) {
-        return 'Вся информация по поступлению, требованиям и срокам находится в деталях каждого университета. Нажмите "Подробнее" на любой карточке!';
+Хочешь, помогу составить план подготовки или расскажу о документах?`;
     }
     
-    // --- Информация о городе ---
-    const cityMatch = lowInput.match(/вузы\s+в\s+(алматы|астана|караганда)/);
-    if (cityMatch) {
-        const city = cityMatch[1];
-        const cityMap = {'алматы': 'Алматы', 'астана': 'Нур-Султан (Астана)', 'караганда': 'Караганда'};
-        const cityName = cityMap[city];
-        
-        document.getElementById('city-filter').value = cityName;
-        filterUniversities();
-        return `Я применил фильтр по городу "${cityName}". Посмотрите обновленный список в секции "Каталог Университетов".`;
+    if (lowInput.includes('не поступлю') || lowInput.includes('не смогу') || lowInput.includes('не получится') || lowInput.includes('не уверен')) {
+        return `Стоп! 🛑 Не позволяй негативным мыслям брать верх. 
+
+<strong>Помни:</strong>
+• У тебя есть несколько вариантов - не один университет!
+• Есть гранты, есть платное обучение, есть альтернативные пути
+• Даже если не поступишь в первый год - это не конец света, можно попробовать снова
+• Многие успешные люди не поступили с первого раза
+
+<strong>Что делать прямо сейчас:</strong>
+1. Составь список из 3-5 университетов, куда хочешь поступить
+2. Узнай проходные баллы прошлых лет
+3. Начни готовиться систематически
+4. Верь в свои силы!
+
+Хочешь, помогу выбрать несколько вариантов университетов?`;
     }
+    
+    if (lowInput.includes('мотивац') || lowInput.includes('лень') || lowInput.includes('не хочу') || lowInput.includes('устал')) {
+        return `Понимаю! Иногда бывает сложно найти мотивацию. 💪
 
-    // --- Если нет совпадений ---
-    return "Я не совсем понял ваш вопрос. Пожалуйста, используйте ключевые слова: 'Сравнить [ВУЗ 1] и [ВУЗ 2]', 'Опрос', 'ВУЗы в [Город]' или 'Поступление'.";
+<strong>Попробуй вспомнить:</strong>
+• Зачем ты хочешь поступить? Какая у тебя мечта?
+• Как изменится твоя жизнь после поступления?
+• Кем ты видишь себя через 5 лет?
+
+<strong>Практические советы:</strong>
+• Разбей большую цель на маленькие шаги
+• Учись по 30-45 минут, потом делай перерыв
+• Найди единомышленников для совместной подготовки
+• Визуализируй свой успех - представь, как получаешь студенческий билет!
+
+<strong>Помни:</strong> Каждый день подготовки - это шаг к твоей мечте! 🎯
+
+Могу помочь составить план подготовки или найти мотивацию через выбор профессии. Что тебя больше интересует?`;
+    }
+    
+    // === ВЫБОР ПРОФЕССИИ - РАСПОЗНАВАНИЕ ПРЕДПОЧТЕНИЙ ===
+    // Работа с техникой
+    if (lowInput.includes('техник') || lowInput.includes('машины') || lowInput.includes('конструктор') || lowInput.includes('инженер') || 
+        lowInput.includes('механизм') || lowInput.includes('гаджет') || lowInput.includes('компьютер') || lowInput.includes('программирование')) {
+        return `Отлично! Работа с техникой - это очень перспективное направление! 🔧⚙️
+
+<strong>Тебе подойдут специальности:</strong>
+
+<strong>1. Инженерия и Техника:</strong>
+• Нефтегазовое дело - работа с нефтяным и газовым оборудованием
+• Машиностроение - проектирование и создание машин
+• Автоматизация и управление - автоматизированные системы
+• Горное дело - горнодобывающее оборудование
+• Строительство - строительная техника и оборудование
+
+<strong>2. IT и Программирование:</strong>
+• Программная инженерия - создание программного обеспечения
+• Информационные системы - разработка IT-систем
+• Кибербезопасность - защита компьютерных систем
+• Data Science - работа с большими данными
+• Информационная безопасность
+
+<strong>Рекомендуемые предметы ЕНТ:</strong>
+• Математика + Физика (для инженерии)
+• Математика + Информатика (для IT)
+
+<strong>Рекомендуемые университеты:</strong>
+• Satbayev University (Алматы) - инженерия
+• КазНУ (Алматы) - IT и инженерия
+• Назарбаев Университет (Астана) - инженерия
+• AITU (Астана) - IT
+• IITU (Алматы) - IT
+• КарТУ (Караганда) - инженерия
+
+Хочешь узнать подробнее о какой-то специальности или университете?`;
+    }
+    
+    // Работа с людьми
+    if (lowInput.includes('людьми') || lowInput.includes('люди') || lowInput.includes('общение') || lowInput.includes('помогать людям') ||
+        lowInput.includes('учитель') || lowInput.includes('врач') || lowInput.includes('психолог') || lowInput.includes('социальн')) {
+        return `Прекрасно! Работа с людьми - это очень важная и нужная сфера! 👥❤️
+
+<strong>Тебе подойдут специальности:</strong>
+
+<strong>1. Медицина и Здравоохранение:</strong>
+• Общая медицина - врач-терапевт, хирург
+• Стоматология - стоматолог
+• Фармация - фармацевт
+• Педиатрия - детский врач
+• Общественное здравоохранение
+
+<strong>2. Педагогика и Образование:</strong>
+• Педагогика и психология - учитель, психолог
+• Учитель информатики, истории, языков
+• Дефектология - работа с детьми с особыми потребностями
+
+<strong>3. Социальные и Гуманитарные:</strong>
+• Журналистика - общение через медиа
+• Международные отношения - дипломатия
+• Социальная работа - помощь людям
+
+<strong>Рекомендуемые предметы ЕНТ:</strong>
+• Биология + Химия (для медицины)
+• История + Иностранный язык (для гуманитарных)
+• Биология + География (для педагогики)
+
+<strong>Рекомендуемые университеты:</strong>
+• КазНМУ (Алматы) - медицина
+• КарМУ (Караганда) - медицина
+• КазНПУ (Алматы) - педагогика
+• КазНУ (Алматы) - гуманитарные
+• ЕНУ (Астана) - журналистика
+
+Хочешь узнать подробнее о какой-то специальности?`;
+    }
+    
+    // Работа с данными
+    if (lowInput.includes('данн') || lowInput.includes('анализ') || lowInput.includes('цифр') || lowInput.includes('статистик') ||
+        lowInput.includes('математик') || lowInput.includes('расчет') || lowInput.includes('финанс') || lowInput.includes('экономик')) {
+        return `Отлично! Работа с данными и цифрами - это востребованное направление! 📊💹
+
+<strong>Тебе подойдут специальности:</strong>
+
+<strong>1. IT и Data Science:</strong>
+• Data Science - анализ больших данных
+• Big Data Analysis - работа с большими массивами данных
+• Программная инженерия - создание систем обработки данных
+• Информационные системы
+
+<strong>2. Экономика и Финансы:</strong>
+• Финансы - работа с финансовыми данными
+• Экономика - экономический анализ
+• Учет и аудит - бухгалтерский учет
+• Маркетинг - анализ рынка
+
+<strong>3. Инженерия (аналитические направления):</strong>
+• Автоматизация и управление - системы управления данными
+
+<strong>Рекомендуемые предметы ЕНТ:</strong>
+• Математика + Информатика (для IT/Data Science)
+• Математика + География (для экономики)
+
+<strong>Рекомендуемые университеты:</strong>
+• AITU (Астана) - Data Science, Big Data
+• IITU (Алматы) - Data Science, IT
+• КазНУ (Алматы) - экономика, IT
+• Назарбаев Университет (Астана) - экономика, IT
+
+Хочешь узнать подробнее о какой-то специальности?`;
+    }
+    
+    // Творчество
+    if (lowInput.includes('творчеств') || lowInput.includes('искусств') || lowInput.includes('дизайн') || lowInput.includes('архитектур') ||
+        lowInput.includes('рисован') || lowInput.includes('музык') || lowInput.includes('писат') || lowInput.includes('креатив')) {
+        return `Замечательно! Творчество - это прекрасное направление! 🎨✨
+
+<strong>Тебе подойдут специальности:</strong>
+
+<strong>1. Дизайн и Архитектура:</strong>
+• Архитектура и дизайн - проектирование зданий и интерьеров
+• Графический дизайн
+• Дизайн интерьера
+
+<strong>2. Искусство и Культура:</strong>
+• Журналистика - творческое письмо
+• Филология - литературное творчество
+• Искусство - изобразительное искусство, музыка
+
+<strong>3. Гуманитарные (творческие):</strong>
+• Переводческое дело - творческий перевод
+• Иностранная филология - изучение языков и культуры
+
+<strong>Рекомендуемые предметы ЕНТ:</strong>
+• Математика + Физика (для архитектуры)
+• История + Иностранный язык (для гуманитарных)
+• Творческие экзамены (для искусства)
+
+<strong>Рекомендуемые университеты:</strong>
+• ЕНУ (Астана) - архитектура, журналистика
+• КазНПУ (Алматы) - искусство, филология
+• КазНУ (Алматы) - филология, журналистика
+
+Хочешь узнать подробнее о какой-то специальности?`;
+    }
+    
+    // === ВЫБОР ПРОФЕССИИ ===
+    if (lowInput.includes('професси') || lowInput.includes('кем стать') || lowInput.includes('специальность') || lowInput.includes('направление')) {
+        return `Отличный вопрос! Выбор профессии - это важный шаг. 🎓
+
+<strong>Давай разберемся вместе:</strong>
+1. Что тебе нравится делать? (работать с людьми, техникой, данными, творчеством?)
+2. Какие предметы в школе тебе даются легче всего?
+3. О чем ты мечтаешь? Какую жизнь хочешь?
+
+<strong>Могу предложить:</strong>
+• Пройти опрос профориентации (нажми "Начать опрос" в секции Nurym выше)
+• Рассказать о разных профессиях и их перспективах
+• Помочь связать твои интересы с конкретными специальностями
+
+<strong>Популярные направления:</strong>
+• IT и технологии - программирование, Data Science, кибербезопасность
+• Медицина - врач, стоматолог, фармацевт
+• Инженерия - нефтегаз, строительство, машиностроение
+• Гуманитарные - журналистика, педагогика, международные отношения
+• Экономика - финансы, менеджмент, маркетинг
+
+Напиши, что тебя интересует, и я помогу выбрать профессию!`;
+    }
+    
+    // === ВЫБОР УНИВЕРСИТЕТА ===
+    if (lowInput.includes('университет') || lowInput.includes('вуз') || lowInput.includes('куда поступить') || lowInput.includes('выбрать вуз')) {
+        const cityMatch = lowInput.match(/(алматы|астана|караганда|нур-султан)/);
+        let response = `Помогу выбрать университет! 🏛️\n\n`;
+        
+        if (cityMatch) {
+            const city = cityMatch[1];
+            const cityMap = {
+                'алматы': 'Алматы',
+                'астана': 'Нур-Султан (Астана)',
+                'нур-султан': 'Нур-Султан (Астана)',
+                'караганда': 'Караганда'
+            };
+            const cityName = cityMap[city];
+            const unisInCity = universityData.filter(u => u.city === cityName);
+            
+            response += `<strong>ВУЗы в ${cityName}:</strong>\n`;
+            unisInCity.forEach(uni => {
+                response += `• ${uni.name}\n`;
+            });
+            response += `\nИспользуй фильтры выше, чтобы увидеть подробную информацию о каждом университете!\n\n`;
+        }
+        
+        response += `<strong>Как выбрать университет:</strong>
+1. Определи специальность, которую хочешь изучать
+2. Посмотри, какие ВУЗы предлагают эту специальность
+3. Изучи требования для поступления (баллы ЕНТ, предметы)
+4. Узнай о грантах и стипендиях
+5. Посмотри рейтинги и отзывы
+
+<strong>Могу помочь:</strong>
+• Подобрать университеты по твоим предметам ЕНТ
+• Сравнить несколько ВУЗов
+• Рассказать о требованиях для поступления
+
+Напиши свои предметы ЕНТ или интересующую специальность!`;
+        return response;
+    }
+    
+    // === ДОКУМЕНТЫ ===
+    if (lowInput.includes('документ') || lowInput.includes('что нужно') || lowInput.includes('список документов') || lowInput.includes('подача документов')) {
+        return `Отлично, что думаешь о документах заранее! 📄
+
+<strong>Основной список документов для поступления:</strong>
+
+1. <strong>Документ об образовании:</strong>
+   • Аттестат о среднем общем образовании (оригинал + копия)
+   • Приложение к аттестату (копия)
+
+2. <strong>Результаты ЕНТ:</strong>
+   • Сертификат ЕНТ (оригинал + копия)
+   • Минимальный балл обычно 50, но для грантов нужно выше
+
+3. <strong>Удостоверение личности:</strong>
+   • Удостоверение личности (оригинал + копия)
+   • Свидетельство о рождении (копия)
+
+4. <strong>Фотографии:</strong>
+   • 4-6 цветных фотографий 3x4 см
+
+5. <strong>Медицинская справка:</strong>
+   • Форма 086-У (для некоторых специальностей)
+
+6. <strong>Дополнительно (если есть):</strong>
+   • Дипломы, грамоты, сертификаты (копии)
+   • Справка о льготах (если применимо)
+   • Документы о смене ФИО (если было)
+
+<strong>Важно:</strong>
+• Сроки подачи: обычно Июль - Август (уточняй на сайте каждого ВУЗа!)
+• Подавай документы в несколько ВУЗов для увеличения шансов
+• Храни все оригиналы в безопасном месте
+
+<strong>Для конкретного университета:</strong>
+Нажми "Подробнее" на карточке университета, чтобы узнать точные требования и сроки!
+
+Нужна помощь с чем-то еще?`;
+    }
+    
+    // === СРОКИ ПОСТУПЛЕНИЯ ===
+    if (lowInput.includes('срок') || lowInput.includes('когда') || lowInput.includes('дата') || lowInput.includes('дедлайн')) {
+        return `Сроки подачи документов очень важны! ⏰
+
+<strong>Общие сроки (примерные):</strong>
+• <strong>Июль</strong> - начало приема документов
+• <strong>Август</strong> - основной период подачи
+• <strong>Конец августа</strong> - обычно последний день приема
+
+<strong>Важно:</strong>
+• Каждый ВУЗ устанавливает свои сроки
+• Сроки могут отличаться для грантов и платного обучения
+• Некоторые ВУЗы (например, НУ) имеют другие сроки (Октябрь-Декабрь)
+
+<strong>Что делать:</strong>
+1. Следи за сайтами выбранных ВУЗов с мая-июня
+2. Подготовь документы заранее (в июне)
+3. Не откладывай подачу на последний день!
+
+<strong>Для точных сроков:</strong>
+Нажми "Подробнее" на карточке интересующего университета - там указаны точные даты!
+
+Хочешь узнать сроки для конкретного университета? Напиши его название!`;
+    }
+    
+    // === ГРАНТЫ И СТИПЕНДИИ ===
+    if (lowInput.includes('грант') || lowInput.includes('стипенди') || lowInput.includes('бюджет') || lowInput.includes('бесплатно')) {
+        return `Гранты - отличная возможность учиться бесплатно! 💰
+
+<strong>Виды грантов в Казахстане:</strong>
+
+1. <strong>Гранты МОН РК (Министерство образования):</strong>
+   • Государственные образовательные гранты
+   • Покрывают обучение полностью
+   • Конкурсный отбор по баллам ЕНТ
+
+2. <strong>Внутренние гранты ВУЗов:</strong>
+   • Некоторые университеты дают свои гранты
+   • Могут быть для определенных специальностей
+   • Уточняй на сайте каждого ВУЗа
+
+3. <strong>Целевые гранты:</strong>
+   • От предприятий и организаций
+   • Обычно с условием работы после обучения
+
+<strong>Как получить грант:</strong>
+• Высокие баллы ЕНТ (обычно от 100+)
+• Правильный выбор предметов ЕНТ
+• Подача документов в срок
+• Конкурсный отбор
+
+<strong>Совет:</strong>
+Даже если не получишь грант, есть платное обучение, рассрочка, кредиты на образование.
+
+Хочешь узнать о грантах в конкретном университете? Напиши его название!`;
+    }
+    
+    // === ПРЕДМЕТЫ ЕНТ ===
+    if (lowInput.includes('предмет') || lowInput.includes('ент') || lowInput.includes('какие предметы') || lowInput.includes('выбрать предметы')) {
+        return `Выбор предметов ЕНТ - ключевой момент! 📚
+
+<strong>Обязательные предметы ЕНТ:</strong>
+• Математическая грамотность
+• Грамотность чтения
+• История Казахстана
+
+<strong>Профильные предметы (выбираешь 2):</strong>
+• Математика
+• Физика
+• Химия
+• Биология
+• География
+• Всемирная история
+• Основы права
+• Иностранный язык
+• Казахский/Русский язык
+• Литература
+• Информатика
+
+<strong>Как выбрать предметы:</strong>
+1. Определи специальность, которую хочешь изучать
+2. Посмотри, какие предметы требуются для этой специальности
+3. Выбери те, в которых ты силен
+
+<strong>Популярные комбинации:</strong>
+• <strong>IT/Инженерия:</strong> Математика + Физика/Информатика
+• <strong>Медицина:</strong> Биология + Химия
+• <strong>Гуманитарные:</strong> История + Иностранный язык
+• <strong>Экономика:</strong> Математика + География
+
+<strong>Совет:</strong>
+Используй фильтры выше, чтобы найти университеты по твоим предметам!
+
+Не знаешь, какие предметы выбрать? Пройди опрос профориентации или напиши, какая специальность тебя интересует!`;
+    }
+    
+    // === ОБЩИЕ ВОПРОСЫ ===
+    if (lowInput.includes('привет') || lowInput.includes('здравствуй') || lowInput.includes('начать')) {
+        return `Привет! 👋 Рад помочь тебе на пути к поступлению!
+
+Я могу помочь с:
+• 🎓 Выбором профессии и специальности
+• 🏛️ Выбором университета
+• 📄 Подготовкой документов
+• 💪 Психологической поддержкой
+• ❓ Любыми вопросами о поступлении
+
+Просто напиши, что тебя интересует, и я помогу!`;
+    }
+    
+    if (lowInput.includes('спасибо') || lowInput.includes('благодар')) {
+        return `Пожалуйста! 😊 Я всегда здесь, чтобы помочь тебе.
+
+Помни:
+• Ты справишься! 💪
+• Подготовка - ключ к успеху
+• Верь в себя и свои силы
+• Каждый шаг приближает тебя к цели
+
+Если возникнут еще вопросы - пиши, я всегда готов помочь! Удачи на поступлении! 🍀`;
+    }
+    
+    // === РАСПОЗНАВАНИЕ ШКОЛЬНЫХ ПРЕДМЕТОВ ===
+    const subjects = ['математика', 'физика', 'химия', 'биология', 'информатика', 'история', 'география', 'иностранный', 'язык', 'литература'];
+    const foundSubjects = subjects.filter(subj => lowInput.includes(subj));
+    
+    if (foundSubjects.length > 0) {
+        let response = `Отлично! Вижу, что тебе интересны: ${foundSubjects.join(', ')}. 📚\n\n`;
+        
+        // Определяем направление по предметам
+        if (foundSubjects.some(s => ['математика', 'физика', 'информатика'].includes(s))) {
+            response += `<strong>Тебе подходят технические специальности:</strong>\n`;
+            response += `• IT и программирование (Математика + Информатика)\n`;
+            response += `• Инженерия (Математика + Физика)\n`;
+            response += `• Data Science (Математика + Информатика)\n\n`;
+            response += `<strong>Рекомендуемые университеты:</strong>\n`;
+            response += `• AITU, IITU - для IT\n`;
+            response += `• Satbayev University, КарТУ - для инженерии\n`;
+            response += `• КазНУ, НУ - универсальные\n`;
+        }
+        
+        if (foundSubjects.some(s => ['биология', 'химия'].includes(s))) {
+            response += `<strong>Тебе подходят медицинские специальности:</strong>\n`;
+            response += `• Медицина (Биология + Химия)\n`;
+            response += `• Стоматология (Биология + Химия)\n`;
+            response += `• Фармация (Биология + Химия)\n\n`;
+            response += `<strong>Рекомендуемые университеты:</strong>\n`;
+            response += `• КазНМУ (Алматы)\n`;
+            response += `• КарМУ (Караганда)\n`;
+        }
+        
+        if (foundSubjects.some(s => ['история', 'география', 'иностранный', 'язык', 'литература'].includes(s))) {
+            response += `<strong>Тебе подходят гуманитарные специальности:</strong>\n`;
+            response += `• Журналистика (История + Иностранный язык)\n`;
+            response += `• Международные отношения (История + Иностранный язык)\n`;
+            response += `• Педагогика (История + География)\n`;
+            response += `• Переводческое дело (Иностранный язык + История)\n\n`;
+            response += `<strong>Рекомендуемые университеты:</strong>\n`;
+            response += `• КазНУ, ЕНУ - гуманитарные\n`;
+            response += `• КазНПУ - педагогика\n`;
+        }
+        
+        response += `\nХочешь узнать подробнее о какой-то специальности или университете?`;
+        return response;
+    }
+    
+    // === ПО УМОЛЧАНИЮ ===
+    return `Спасибо за вопрос! 🤔 
+
+Я могу помочь тебе с:
+• <strong>Выбором профессии</strong> - напиши "помоги выбрать профессию" или что тебе нравится (техника, люди, данные, творчество)
+• <strong>Выбором университета</strong> - напиши "какой университет выбрать" или название города
+• <strong>Документами</strong> - напиши "какие документы нужны"
+• <strong>Сроками</strong> - напиши "когда подавать документы"
+• <strong>Грантами</strong> - напиши "как получить грант"
+• <strong>Предметами ЕНТ</strong> - напиши "какие предметы выбрать" или назови свои предметы
+• <strong>Психологической поддержкой</strong> - напиши о своих переживаниях
+
+Или просто опиши свою ситуацию, и я постараюсь помочь! 💬`;
 }
-
