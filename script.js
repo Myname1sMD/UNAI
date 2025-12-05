@@ -395,7 +395,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
+                "link": "https://www.youtube.com/watch?v=SwQqY3KcftM"
             }
         }
     },
@@ -509,7 +509,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/d3H_j_QYfC0"
+                "link": "https://youtu.be/QILWsH8dmnE?si=QTjE28SWXy79rAhF"
             }
         }
     },
@@ -585,7 +585,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
+                "link": "https://youtu.be/xoHCxwtEj0k?si=77cjGeV0nVyJ7Pxv"
             }
         }
     },
@@ -623,7 +623,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/pLz_ZqGz9U0"
+                "link": "https://youtu.be/H6laATkp5Nc?si=zRyjL5H9b3fvx_6P"
             }
         }
     },
@@ -661,7 +661,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/d3H_j_QYfC0"
+                "link": "Source: Kuula https://share.google/Uu39CfI7cWFGTH5Xi"
             }
         }
     },
@@ -699,7 +699,7 @@ const universityData = [
             },
             "virtual_tour": {
                 "title": "🗺️ 3D-тур",
-                "link": "https://www.youtube.com/embed/z4f_g_Jk9U0"
+                "link": "https://iitu.edu.kz/_static/3d-tour-iitu/"
             }
         }
     }
